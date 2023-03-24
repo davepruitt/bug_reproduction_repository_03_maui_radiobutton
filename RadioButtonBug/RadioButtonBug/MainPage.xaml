@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RadioButtonBug.MainPage">
+
+    <ContentPage.Resources>
+        <ControlTemplate x:Key="RadioButtonTemplate">
+            <Border Stroke="Transparent" BackgroundColor="{TemplateBinding BackgroundColor}" StrokeShape="RoundRectangle 5,5,5,5" StrokeThickness="3">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CheckedStates">
+                            <VisualState x:Name="Checked">
+                                <VisualState.Setters>
+                                    <Setter Property="Stroke" Value="#49851c" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Unchecked">
+                                <VisualState.Setters>
+                                    <Setter Property="Stroke" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+                <Grid>
+                    <Label x:Name="check" Margin="20,5" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="White" Text="{TemplateBinding Content}" />
+                </Grid>
+            </Border>            
+        </ControlTemplate>
+
+        <Style TargetType="RadioButton" x:Key="RadioButtonStyle">
+            <Setter Property="ControlTemplate" Value="{StaticResource RadioButtonTemplate}" />
+            <Style.Triggers>
+                <Trigger TargetType="RadioButton" Property="IsEnabled" Value="True">
+                    <Setter Property="BackgroundColor" Value="DarkBlue" />
+                </Trigger>
+                <Trigger TargetType="RadioButton" Property="IsEnabled" Value="False">
+                    <Setter Property="BackgroundColor" Value="LightGray" />
+                </Trigger>
+                <Trigger TargetType="RadioButton" Property="IsChecked" Value="True">
+                    <Setter Property="BackgroundColor" Value="#69BE28" />
+                </Trigger>
+                <Trigger TargetType="RadioButton" Property="IsChecked" Value="False">
+                    <Setter Property="BackgroundColor" Value="DarkBlue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackLayout Grid.Column="0" Orientation="Vertical" Margin="20" HorizontalOptions="Center" VerticalOptions="Center">
+            <RadioButton x:Name="RadioButton1" Style="{StaticResource Key=RadioButtonStyle}" Content="Radio Button 1" IsEnabled="{Binding Path=IsRadioButtonEnabled, FallbackValue=True}" />
+            <RadioButton x:Name="RadioButton2" Style="{StaticResource Key=RadioButtonStyle}" Content="Radio Button 2" IsEnabled="{Binding Path=IsRadioButtonEnabled, FallbackValue=True}" />
+        </StackLayout>
+
+        <Button Grid.Column="1" Margin="20" HorizontalOptions="Center" VerticalOptions="Center" Text="Toggle Radio Buttons Enabled/Disabled" Clicked="Button_Clicked" Padding="20" LineBreakMode="WordWrap" />
+
+    </Grid>
+
+</ContentPage>
